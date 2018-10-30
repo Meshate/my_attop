@@ -4,7 +4,7 @@
 
 ## Last update
 
-format code
+fix readme
 
 ## Required
 
@@ -18,3 +18,4 @@ python3.6 or later
 
 - 自动答题
 - 多线程与异步
+- ...
