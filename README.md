@@ -10,7 +10,7 @@ multiprocessing
 
 python3.6 or later
 
-in requirement.txt
+in requirements.txt
 
 ## Usage
 
