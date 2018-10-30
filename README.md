@@ -4,11 +4,13 @@
 
 ## Last update
 
-fix readme
+multiprocessing
 
 ## Required
 
 python3.6 or later
+
+in requirement.txt
 
 ## Usage
 
@@ -17,5 +19,5 @@ python3.6 or later
 ## Todo
 
 - 自动答题
-- 多线程与异步
+- 更多科目支持
 - ...

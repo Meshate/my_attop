@@ -4,17 +4,19 @@ from bs4 import BeautifulSoup
 import re
 import urllib.parse as parse
 import time
+from multiprocessing import Pool
+
 
 class Attop(object):
     def __init__(self):
-        self.__version__ = 1.0
+        self.__version__ = 1.1
         self.cookie = COOKIE
         self.headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36',
             'cookie': self.cookie
         }
         self.r = requests.Session()
-        self.r.headers=self.headers
+        self.r.headers = self.headers
 
         d_url = 'http://www.attop.com/wk/'
         url = 'http://www.attop.com/wk/learn.htm?id=74'
@@ -126,7 +128,6 @@ class Attop(object):
         post_2(num)
         post_3()
         post_4()
-        print(f'- 评价{num}成功')
 
     def get_nums(self):
         headers = {
@@ -148,29 +149,36 @@ class Attop(object):
             res = self.r.post(url, data=params)
             use = res.text.encode('utf8').decode('unicode_escape')
             all_num = re.findall(r'media_([0-9]*)', use)
-            print(all_num)
             return all_num
         except Exception as e:
             print(e)
 
     def comment(self):
+        print('- 开始刷评价')
         for each in self.urls:
             self.id = parse.parse_qs(parse.urlparse(each).query)['id'][0]
             self.jid = parse.parse_qs(parse.urlparse(each).query)['jid'][0]
+            p = Pool()
             for num in self.get_nums():
-                self.post_all(int(num))
+                p.apply_async(self.post_all, args=(int(num),))
+            p.close()
+            p.join()
+            print('- working...')
+        print('- 刷评价结束')
 
     def watch(self):
         r = requests.Session()
         r.headers = self.headers
-        print("begin")
+        print("- 开始刷时间")
+        p = Pool()
         try:
             for url in self.urls:
-                r.post(url)
-                print("正在刷 {}".format(url))
-            print("ok,等个十分钟")
-            for i in range(600):
-                time.sleep(1)
-                print("{}/600秒".format(i))
-        except:
-            raise Exception("error")
+                p.apply_async(r.post, args=(url,))
+            p.close()
+            p.join()
+            for i in range(60):
+                print(f'- time: {i}/60')
+                time.sleep(10)
+        except Exception as e:
+            print(e)
+        print('- 刷时间结束')
