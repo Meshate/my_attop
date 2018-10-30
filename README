@@ -1,11 +1,20 @@
-#自制至善网近代史刷子
+# 自制至善网近代史刷子
+
 网上不太好找能用的就自己实现了一个
-##Last update
+
+## Last update
+
 format code
-##Required
+
+## Required
+
 python3.6 or later
-##Usage
+
+## Usage
+
 登录至善网将自己的cookie填入cookie.py，然后运行run.py
-##Todo
+
+## Todo
+
 - 自动答题
 - 多线程与异步
