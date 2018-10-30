@@ -114,7 +114,7 @@ dmypy.json
 .pyre/
 
 # Pycharm
-.idea/
+.idea/*
 
 # self
 string2dict.py
